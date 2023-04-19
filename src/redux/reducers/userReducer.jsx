@@ -3,6 +3,7 @@ import { CREATE_USER } from '../actions/indexActions';
 const INITIAL_STATE = {
   name: '',
   email: '',
+  tokenUser: '',
 };
 
 const userReducer = (state = INITIAL_STATE, { type, payload }) => {
@@ -12,6 +13,7 @@ const userReducer = (state = INITIAL_STATE, { type, payload }) => {
       ...state,
       name: payload.name,
       email: payload.email,
+      token: payload.tokenUser,
     };
 
   default:
