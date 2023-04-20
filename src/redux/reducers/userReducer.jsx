@@ -1,4 +1,4 @@
-import { CREATE_USER } from '../actions/indexActions';
+import { CREATE_USER } from '../actions/userActions';
 
 const INITIAL_STATE = {
   name: '',

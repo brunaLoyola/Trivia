@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { createUser } from '../redux/actions/indexActions';
+import { createUser } from '../redux/actions/userActions';
 import { fetchTrivia } from '../service/fetchTrivia';
 
 class Login extends Component {
@@ -40,6 +40,7 @@ class Login extends Component {
 
   render() {
     const { name, email, disabled } = this.state;
+    const { history } = this.props;
     return (
       <form>
         <label>
@@ -67,6 +68,13 @@ class Login extends Component {
           disabled={ disabled }
         >
           Play
+        </button>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ () => history.push('/settings') }
+        >
+          Settings
         </button>
       </form>
     );

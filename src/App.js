@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import logo from './trivia.png';
 import './App.css';
 import Login from './pages/Login';
+import Settings from './pages/Settings';
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={ Login } />
             <Route path="/game" />
+            <Route exact path="/settings" component={ Settings } />
           </Switch>
         </header>
       </div>
