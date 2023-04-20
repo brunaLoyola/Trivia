@@ -33,7 +33,7 @@ class Login extends Component {
     const { name, email } = this.state;
     const { dispatch, history } = this.props;
     const token = await fetchTrivia();
-    dispatch(createUser({ name, email }));
+    dispatch(createUser(name, email));
     localStorage.setItem('token', token);
     history.push('/game');
   };
