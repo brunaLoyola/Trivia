@@ -1,6 +1,6 @@
 export const CREATE_USER = 'CREATE_USER';
 
-export const createUser = (name, email, tokenUser) => ({
+export const createUser = (name, email) => ({
   type: CREATE_USER,
-  payload: { name, email, tokenUser },
+  payload: { name, email },
 });
