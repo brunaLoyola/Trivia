@@ -98,6 +98,10 @@ class Game extends Component {
     }
   };
 
+  nextButton = () => {
+    this.setState((estadoAnterior) => ({ value: estadoAnterior.value + 1 }));
+  };
+
   render() {
     const {
       category, question, incorrectAnswer,
@@ -132,9 +136,12 @@ class Game extends Component {
                 </button>
               ))
             }
+            { clicou
+              ? <button data-testid="btn-next" onClick={ this.nextButton }>Next</button>
+              : '' }
           </div>
           <div>
-            { timer > 0 ? timer : 'NEXT' }
+            { timer > 0 ? timer : '' }
           </div>
         </div>
       </div>
