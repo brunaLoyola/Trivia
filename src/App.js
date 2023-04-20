@@ -4,6 +4,7 @@ import logo from './trivia.png';
 import './App.css';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
+import Game from './pages/Game';
 
 class App extends Component {
   render() {
@@ -13,7 +14,7 @@ class App extends Component {
           <img src={ logo } className="App-logo" alt="logo" />
           <Switch>
             <Route exact path="/" component={ Login } />
-            <Route path="/game" />
+            <Route exact path="/game" component={ Game } />
             <Route exact path="/settings" component={ Settings } />
           </Switch>
         </header>
