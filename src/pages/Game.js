@@ -21,11 +21,20 @@ class Game extends Component {
       clicou: false,
       colors: 'neutro',
       colorsInco: 'neutro',
+      timer: 30,
     };
   }
 
   componentDidMount() {
+    const interval = 1000;
+    const timeOut = 30000;
     this.getFetch();
+    setInterval(this.timerCounter, interval);
+    setTimeout(() => {
+      this.setState({
+        clicou: true,
+      });
+    }, timeOut);
   }
 
   removeCode = async (keyName) => {
@@ -80,15 +89,23 @@ class Game extends Component {
     });
   };
 
-  nextButton = () => { 
-    this.setState((estadoAnterior) => 
-    ({ value: estadoAnterior.value + 1, })); 
-  }; 
+  timerCounter = () => {
+    const { timer } = this.state;
+    if (timer > 0) {
+      this.setState((prevState) => ({
+        timer: prevState.timer - 1,
+      }));
+    }
+  };
+
+  nextButton = () => {
+    this.setState((estadoAnterior) => ({ value: estadoAnterior.value + 1 }));
+  };
 
   render() {
     const {
       category, question, incorrectAnswer,
-      randomQuestions, correctAnswer, clicou, colors, colorsInco } = this.state;
+      randomQuestions, correctAnswer, clicou, colors, colorsInco, timer } = this.state;
     return (
       <div>
         <Header />
@@ -119,7 +136,12 @@ class Game extends Component {
                 </button>
               ))
             }
-            { clicou ? <button data-testid="btn-next" onClick={ this.nextButton }>Next</button> : '' }
+            { clicou
+              ? <button data-testid="btn-next" onClick={ this.nextButton }>Next</button>
+              : '' }
+          </div>
+          <div>
+            { timer > 0 ? timer : 'Acabou o tempo.' }
           </div>
         </div>
       </div>
