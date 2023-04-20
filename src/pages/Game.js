@@ -141,7 +141,7 @@ class Game extends Component {
               : '' }
           </div>
           <div>
-            { timer > 0 ? timer : '' }
+            { timer > 0 ? timer : 'Acabou o tempo.' }
           </div>
         </div>
       </div>
