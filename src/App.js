@@ -13,6 +13,7 @@ class App extends Component {
           <img src={ logo } className="App-logo" alt="logo" />
           <Switch>
             <Route exact path="/" component={ Login } />
+            <Route path="/game" />
             <Route exact path="/settings" component={ Settings } />
           </Switch>
         </header>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createUser } from '../redux/actions/userActions';
+import { fetchTrivia } from '../service/fetchTrivia';
 
 class Login extends Component {
   state = {
@@ -28,10 +29,12 @@ class Login extends Component {
     }
   };
 
-  handleClick = () => {
-    const { dispatch, history } = this.props;
+  handleClick = async () => {
     const { name, email } = this.state;
+    const { dispatch, history } = this.props;
+    const token = await fetchTrivia();
     dispatch(createUser({ name, email }));
+    localStorage.setItem('token', token);
     history.push('/game');
   };
 
