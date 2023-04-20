@@ -18,6 +18,16 @@ class Feedback extends Component {
       <div>
         <Header />
         <h2 data-testid="feedback-text">{ this.feedbackCondition }</h2>
+        <h3>
+          Placar Final:
+          {' '}
+          <span data-testid="feedback-total-score">{ player.score }</span>
+        </h3>
+        <h3>
+          Acertos:
+          {' '}
+          <span data-testid="feedback-total-question">{ assertions }</span>
+        </h3>
       </div>
     );
   }
