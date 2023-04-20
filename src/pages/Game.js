@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import Header from '../componentes/Header';
 import { fetchQuestions } from '../service/fetchTrivia';
+import './Game.css';
 
 class Game extends Component {
   constructor() {
@@ -17,6 +18,9 @@ class Game extends Component {
       correctAnswer: '',
       incorrectAnswer: '',
       randomQuestions: '',
+      clicou: false,
+      colors: 'neutro',
+      colorsInco: 'neutro',
     };
   }
 
@@ -62,9 +66,24 @@ class Game extends Component {
     });
   };
 
+  handleClick = async ({ target }) => {
+    const { value } = target;
+    const { correctAnswer } = this.state;
+
+    const colors = value === correctAnswer ? 'correctAnswer' : 'correctAnswer';
+    const colorsInco = value !== correctAnswer ? 'incorrectAnswer' : 'incorrectAnswer';
+    console.log(colors, value, correctAnswer);
+    this.setState({
+      colors,
+      colorsInco,
+      clicou: true,
+    });
+  };
+
   render() {
     const {
-      category, question, correctAnswer, incorrectAnswer, randomQuestions } = this.state;
+      category, question, incorrectAnswer,
+      randomQuestions, correctAnswer, clicou, colors, colorsInco } = this.state;
     return (
       <div>
         <Header />
@@ -82,10 +101,14 @@ class Game extends Component {
             {
               Object.values(randomQuestions).map((elemento, index) => (
                 <button
+                  onClick={ this.handleClick }
+                  disabled={ clicou }
+                  value={ elemento }
                   type="button"
                   key={ elemento }
                   data-testid={ elemento === correctAnswer
                     ? 'correct-answer' : `wrong-answer-${index}` }
+                  className={ elemento === correctAnswer ? colors : colorsInco }
                 >
                   { elemento }
                 </button>
