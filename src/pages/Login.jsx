@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { createUser } from '../redux/actions/indexActions';
+import { createUser } from '../redux/actions/userActions';
+import { fetchTrivia } from '../service/fetchTrivia';
 
 class Login extends Component {
   state = {
@@ -28,15 +29,16 @@ class Login extends Component {
     }
   };
 
-  handleClick = () => {
-    const { dispatch, history } = this.props;
+  handleClick = async () => {
     const { name, email } = this.state;
-    dispatch(createUser(name, email));
+    const { dispatch, history } = this.props;
+    dispatch(createUser({ name, email }));
     history.push('/game');
   };
 
   render() {
     const { name, email, disabled } = this.state;
+    const { history } = this.props;
     return (
       <form>
         <label>
@@ -64,6 +66,13 @@ class Login extends Component {
           disabled={ disabled }
         >
           Play
+        </button>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ () => history.push('/settings') }
+        >
+          Settings
         </button>
       </form>
     );
