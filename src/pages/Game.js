@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import Header from '../componentes/Header';
 import { fetchQuestions } from '../service/fetchTrivia';
 
 class Game extends Component {
@@ -66,6 +67,7 @@ class Game extends Component {
       category, question, correctAnswer, incorrectAnswer, randomQuestions } = this.state;
     return (
       <div>
+        <Header />
         <div>
           <h1 data-testid="question-category">{category}</h1>
           <h2
