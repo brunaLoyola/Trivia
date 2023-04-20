@@ -21,6 +21,8 @@ class Game extends Component {
       clicou: false,
       colors: 'neutro',
       colorsInco: 'neutro',
+      assertions: 0,
+      results: [],
     };
   }
 
@@ -46,6 +48,7 @@ class Game extends Component {
     }
 
     this.setState({
+      results,
       result: results[value],
     }, () => this.resultsStates());
   };
@@ -72,18 +75,26 @@ class Game extends Component {
 
     const colors = value === correctAnswer ? 'correctAnswer' : 'correctAnswer';
     const colorsInco = value !== correctAnswer ? 'incorrectAnswer' : 'incorrectAnswer';
-    console.log(colors, value, correctAnswer);
-    this.setState({
+    const sumAssertions = value === correctAnswer ? 1 : 0;
+    this.setState((prevState) => ({
       colors,
       colorsInco,
       clicou: true,
-    });
+      assertions: prevState.assertions + sumAssertions,
+    }));
   };
 
-  nextButton = () => { 
-    this.setState((estadoAnterior) => 
-    ({ value: estadoAnterior.value + 1, })); 
-  }; 
+  nextButton = () => {
+    const time = 200;
+    const { value } = this.state;
+    this.setState({ value: value + 1, clicou: false });
+    setTimeout(() => this.updateResult(), time);
+  };
+
+  updateResult = () => {
+    const { results, value } = this.state;
+    this.setState({ result: results[value] }, () => this.resultsStates());
+  };
 
   render() {
     const {
