@@ -31,7 +31,7 @@ class Login extends Component {
   handleClick = () => {
     const { dispatch, history } = this.props;
     const { name, email } = this.state;
-    dispatch(createUser({ name, email }));
+    dispatch(createUser(name, email));
     history.push('/game');
   };
 
