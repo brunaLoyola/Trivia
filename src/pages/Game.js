@@ -84,6 +84,7 @@ class Game extends Component {
     const {
       category, question, incorrectAnswer,
       randomQuestions, correctAnswer, clicou, colors, colorsInco } = this.state;
+    // const { history } = this.props;
     return (
       <div>
         <Header />
