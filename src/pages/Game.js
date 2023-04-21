@@ -94,10 +94,20 @@ class Game extends Component {
   };
 
   nextButton = () => {
-    const time = 200;
     const { value } = this.state;
-    this.setState({ value: value + 1, clicou: false });
-    setTimeout(() => this.updateResult(), time);
+    const min = 5;
+    const time = 200;
+
+    if (value < min) {
+      this.setState({ value: value + 1,
+        clicou: false,
+        colors: 'neutro',
+        colorsInco: 'neutro' });
+      setTimeout(() => this.updateResult(), time);
+      console.log(value);
+    } else {
+      console.log('teste');
+    }
   };
 
   updateResult = () => {
