@@ -27,7 +27,6 @@ const mapStateToProps = (state) => ({
   ...state.userReducer,
   score: state.player.score,
 });
-console.log(mapStateToProps);
 
 Header.propTypes = {
   name: PropTypes.string.isRequired,

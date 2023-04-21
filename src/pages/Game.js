@@ -160,7 +160,6 @@ class Game extends Component {
     const {
       category, question, incorrectAnswer,
       randomQuestions, correctAnswer, clicou, colors, colorsInco, timer } = this.state;
-    const { history } = this.props;
     return (
       <div>
         <Header />
@@ -198,12 +197,6 @@ class Game extends Component {
             { timer > 0 ? timer : 'Acabou o tempo.' }
           </div>
         </div>
-        <button
-          data-testid="btn-ranking"
-          onClick={ () => history.push('/ranking') }
-        >
-          Ranking
-        </button>
       </div>
     );
   }
