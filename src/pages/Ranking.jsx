@@ -16,7 +16,7 @@ class Ranking extends Component {
     const { history, ranking } = this.props;
     return (
       <div>
-        <h1>Ranking</h1>
+        <h1 data-testid="ranking-title">Ranking</h1>
         <ul>
           {ranking.map((player, index) => (
             <li key={ index }>

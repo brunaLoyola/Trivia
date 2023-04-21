@@ -21,11 +21,22 @@ class Game extends Component {
       clicou: false,
       colors: 'neutro',
       colorsInco: 'neutro',
+      assertions: 0,
+      results: [],
+      timer: 30,
     };
   }
 
   componentDidMount() {
+    const interval = 1000;
+    const timeOut = 30000;
     this.getFetch();
+    setInterval(this.timerCounter, interval);
+    setTimeout(() => {
+      this.setState({
+        clicou: true,
+      });
+    }, timeOut);
   }
 
   removeCode = async (keyName) => {
@@ -46,6 +57,7 @@ class Game extends Component {
     }
 
     this.setState({
+      results,
       result: results[value],
     }, () => this.resultsStates());
   };
@@ -72,18 +84,41 @@ class Game extends Component {
 
     const colors = value === correctAnswer ? 'correctAnswer' : 'correctAnswer';
     const colorsInco = value !== correctAnswer ? 'incorrectAnswer' : 'incorrectAnswer';
-    console.log(colors, value, correctAnswer);
-    this.setState({
+    const sumAssertions = value === correctAnswer ? 1 : 0;
+    this.setState((prevState) => ({
       colors,
       colorsInco,
       clicou: true,
-    });
+      assertions: prevState.assertions + sumAssertions,
+    }));
+  };
+
+  nextButton = () => {
+    const time = 200;
+    const { value } = this.state;
+    this.setState({ value: value + 1, clicou: false });
+    setTimeout(() => this.updateResult(), time);
+  };
+
+  updateResult = () => {
+    const { results, value } = this.state;
+    this.setState({ result: results[value] }, () => this.resultsStates());
+  };
+
+  timerCounter = () => {
+    const { timer } = this.state;
+    if (timer > 0) {
+      this.setState((prevState) => ({
+        timer: prevState.timer - 1,
+      }));
+    }
   };
 
   render() {
     const {
       category, question, incorrectAnswer,
-      randomQuestions, correctAnswer, clicou, colors, colorsInco } = this.state;
+      randomQuestions, correctAnswer, clicou, colors, colorsInco, timer } = this.state;
+    const { history } = this.props;
     return (
       <div>
         <Header />
@@ -114,8 +149,20 @@ class Game extends Component {
                 </button>
               ))
             }
+            { clicou
+              ? <button data-testid="btn-next" onClick={ this.nextButton }>Next</button>
+              : '' }
+          </div>
+          <div>
+            { timer > 0 ? timer : 'Acabou o tempo.' }
           </div>
         </div>
+        <button
+          data-testid="btn-ranking"
+          onClick={ () => history.push('/ranking') }
+        >
+          Ranking
+        </button>
       </div>
     );
   }
