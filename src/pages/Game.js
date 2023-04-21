@@ -169,8 +169,10 @@ class Game extends Component {
           <h1 data-testid="question-category">{category}</h1>
           <h2
             data-testid="question-text"
-            dangerouslySetInnerHTML={ { __html: question } }
-          />
+          >
+            {question}
+
+          </h2>
           {console.log(incorrectAnswer)}
           <div data-testid="answer-options">
             {
