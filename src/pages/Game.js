@@ -6,6 +6,7 @@ import _ from 'lodash';
 import Header from '../componentes/Header';
 import { fetchQuestions } from '../service/fetchTrivia';
 import './Game.css';
+import { createPontuation } from '../redux/actions/playerActions';
 
 class Game extends Component {
   constructor() {
@@ -94,11 +95,12 @@ class Game extends Component {
   };
 
   nextButton = () => {
-    const { value } = this.state;
+    const { value, assertions } = this.state;
+    const { dispatch } = this.props;
     const min = 4;
     const time = 200;
     const { history } = this.props;
-
+    const score = 1;
     if (value < min) {
       this.setState({ value: value + 1,
         clicou: false,
@@ -106,8 +108,9 @@ class Game extends Component {
         timer: 30,
         colorsInco: 'neutro' });
       setTimeout(() => this.updateResult(), time);
-      console.log(value);
     } else {
+      console.log(assertions);
+      dispatch(createPontuation(assertions, score));
       history.push('/feedback');
     }
   };
@@ -182,6 +185,7 @@ class Game extends Component {
 
 Game.propTypes = {
   history: PropTypes.shape().isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default connect()(Game);
