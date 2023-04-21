@@ -1,7 +1,13 @@
 import { SET_RANKING } from '../actions/rankingActions';
 
 const INITIAL_STATE = {
-  ranking: [],
+  ranking: [
+    {
+      name: '',
+      email: '',
+      score: 0,
+    },
+  ],
 };
 
 export const rankingReducer = (state = INITIAL_STATE, action) => {

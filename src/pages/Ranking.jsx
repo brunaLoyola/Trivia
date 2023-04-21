@@ -14,11 +14,12 @@ class Ranking extends Component {
 
   render() {
     const { history, ranking } = this.props;
+    console.log(ranking);
     return (
       <div>
         <h1 data-testid="ranking-title">Ranking</h1>
         <ul>
-          {ranking.map((player, index) => (
+          {ranking?.map((player, index) => (
             <li key={ index }>
               <img
                 data-testid={ `player-picture-${index}` }
@@ -59,7 +60,7 @@ Ranking.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  ranking: state.ranking,
+  ...state.ranking,
 });
 
 export default connect(mapStateToProps)(Ranking);
