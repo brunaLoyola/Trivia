@@ -6,6 +6,7 @@ import _ from 'lodash';
 import Header from '../componentes/Header';
 import { fetchQuestions } from '../service/fetchTrivia';
 import './Game.css';
+import { createPlayer } from '../redux/actions/playerActions';
 
 class Game extends Component {
   constructor() {
@@ -21,9 +22,9 @@ class Game extends Component {
       clicou: false,
       colors: 'neutro',
       colorsInco: 'neutro',
-      assertions: 0,
       results: [],
       timer: 30,
+      difficulty: '',
     };
   }
 
@@ -69,35 +70,76 @@ class Game extends Component {
     const incorrectAnswer = result.incorrect_answers;
     const arrayQuestions = [...incorrectAnswer, correctAnswer];
     const randomQuestions = _.shuffle(arrayQuestions);
+    const { difficulty } = result;
     this.setState({
       category,
       question,
       correctAnswer,
       incorrectAnswer,
       randomQuestions,
+      difficulty,
     });
   };
 
   handleClick = async ({ target }) => {
     const { value } = target;
-    const { correctAnswer } = this.state;
-
+    const { dispatch, name, email } = this.props;
+    const { correctAnswer, timer } = this.state;
+    const ten = 10;
+    const valueDifficulty = this.difficultyNumber();
+    console.log(timer);
     const colors = value === correctAnswer ? 'correctAnswer' : 'correctAnswer';
     const colorsInco = value !== correctAnswer ? 'incorrectAnswer' : 'incorrectAnswer';
-    const sumAssertions = value === correctAnswer ? 1 : 0;
-    this.setState((prevState) => ({
+
+    if (value === correctAnswer && timer !== 0) {
+      const assertions = 1;
+      const score = ten + (timer * valueDifficulty);
+      dispatch(createPlayer(name, assertions, score, email));
+    } else {
+      const score = 0;
+      const assertions = 0;
+      dispatch(createPlayer(name, assertions, score, email));
+    }
+    this.setState(() => ({
       colors,
       colorsInco,
       clicou: true,
-      assertions: prevState.assertions + sumAssertions,
     }));
   };
 
   nextButton = () => {
-    const time = 200;
     const { value } = this.state;
-    this.setState({ value: value + 1, clicou: false });
-    setTimeout(() => this.updateResult(), time);
+    const min = 4;
+    const time = 200;
+    const { history } = this.props;
+
+    if (value < min) {
+      this.setState({ value: value + 1,
+        clicou: false,
+        colors: 'neutro',
+        timer: 30,
+        colorsInco: 'neutro' });
+      setTimeout(() => this.updateResult(), time);
+    } else {
+      history.push('/feedback');
+    }
+  };
+
+  difficultyNumber = () => {
+    const max = 3;
+    const med = 2;
+    const min = 1;
+    const { difficulty } = this.state;
+    console.log(difficulty);
+    if (difficulty === 'hard') {
+      return max;
+    }
+    if (difficulty === 'medium') {
+      return med;
+    }
+    if (difficulty === 'easy') {
+      return min;
+    }
   };
 
   updateResult = () => {
@@ -118,7 +160,6 @@ class Game extends Component {
     const {
       category, question, incorrectAnswer,
       randomQuestions, correctAnswer, clicou, colors, colorsInco, timer } = this.state;
-    const { history } = this.props;
     return (
       <div>
         <Header />
@@ -127,7 +168,6 @@ class Game extends Component {
           <h2
             data-testid="question-text"
           >
-            {' '}
             {question}
 
           </h2>
@@ -157,19 +197,19 @@ class Game extends Component {
             { timer > 0 ? timer : 'Acabou o tempo.' }
           </div>
         </div>
-        <button
-          data-testid="btn-ranking"
-          onClick={ () => history.push('/ranking') }
-        >
-          Ranking
-        </button>
       </div>
     );
   }
 }
+const mapStateToProps = (state) => ({
+  ...state.userReducer,
+});
 
 Game.propTypes = {
   history: PropTypes.shape().isRequired,
+  dispatch: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
-export default connect()(Game);
+export default connect(mapStateToProps)(Game);
