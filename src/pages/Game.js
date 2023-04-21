@@ -95,18 +95,20 @@ class Game extends Component {
 
   nextButton = () => {
     const { value } = this.state;
-    const min = 5;
+    const min = 4;
     const time = 200;
+    const { history } = this.props;
 
     if (value < min) {
       this.setState({ value: value + 1,
         clicou: false,
         colors: 'neutro',
+        timer: 30,
         colorsInco: 'neutro' });
       setTimeout(() => this.updateResult(), time);
       console.log(value);
     } else {
-      console.log('teste');
+      history.push('/feedback');
     }
   };
 
@@ -128,6 +130,7 @@ class Game extends Component {
     const {
       category, question, incorrectAnswer,
       randomQuestions, correctAnswer, clicou, colors, colorsInco, timer } = this.state;
+    const { history } = this.props;
     return (
       <div>
         <Header />
@@ -166,6 +169,12 @@ class Game extends Component {
             { timer > 0 ? timer : 'Acabou o tempo.' }
           </div>
         </div>
+        <button
+          data-testid="btn-ranking"
+          onClick={ () => history.push('/ranking') }
+        >
+          Ranking
+        </button>
       </div>
     );
   }
