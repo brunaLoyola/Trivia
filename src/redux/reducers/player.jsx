@@ -13,7 +13,7 @@ const player = (state = INITIAL_STATE, { type, payload }) => {
     return {
       ...state,
       name: payload.name,
-      assertions: payload.assertions,
+      assertions: state.assertions + payload.assertions,
       score: state.score + payload.score,
       gravatarEmail: payload.gravatarEmail,
     };

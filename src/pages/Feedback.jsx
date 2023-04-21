@@ -5,11 +5,11 @@ import Header from '../componentes/Header';
 
 class Feedback extends Component {
   feedbackCondition = () => {
-    const { score } = this.props;
+    const { assertions } = this.props;
     const scoreMin = 3;
     const bad = 'Could be better...';
     const god = 'Well Done!';
-    if (score < scoreMin) {
+    if (assertions < scoreMin) {
       return bad;
     }
     return god;
@@ -20,7 +20,7 @@ class Feedback extends Component {
     return (
       <div>
         <Header />
-        <h2 data-testid="feedback-text">{ this.feedbackCondition }</h2>
+        <h2 data-testid="feedback-text">{ this.feedbackCondition() }</h2>
         <h3>
           Placar Final:
           {' '}

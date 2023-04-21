@@ -22,7 +22,6 @@ class Game extends Component {
       clicou: false,
       colors: 'neutro',
       colorsInco: 'neutro',
-      assertions: 0,
       results: [],
       timer: 30,
       difficulty: '',
@@ -85,26 +84,26 @@ class Game extends Component {
   handleClick = async ({ target }) => {
     const { value } = target;
     const { dispatch, name, email } = this.props;
-    const { correctAnswer, timer, assertions } = this.state;
+    const { correctAnswer, timer } = this.state;
     const ten = 10;
     const valueDifficulty = this.difficultyNumber();
     console.log(timer);
     const colors = value === correctAnswer ? 'correctAnswer' : 'correctAnswer';
     const colorsInco = value !== correctAnswer ? 'incorrectAnswer' : 'incorrectAnswer';
-    const sumAssertions = value === correctAnswer ? 1 : 0;
 
     if (value === correctAnswer && timer !== 0) {
+      const assertions = 1;
       const score = ten + (timer * valueDifficulty);
       dispatch(createPlayer(name, assertions, score, email));
     } else {
       const score = 0;
+      const assertions = 0;
       dispatch(createPlayer(name, assertions, score, email));
     }
-    this.setState((prevState) => ({
+    this.setState(() => ({
       colors,
       colorsInco,
       clicou: true,
-      assertions: prevState.assertions + sumAssertions,
     }));
   };
 
