@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../componentes/Header';
 
 class Feedback extends Component {
   feedbackCondition = () => {
+    const { score } = this.props;
     const scoreMin = 3;
     const bad = 'Could be better...';
     const god = 'Well Done!';
-    if (player.score < scoreMin) {
+    if (score < scoreMin) {
       return bad;
     }
     return god;
   };
 
   render() {
+    const { score, assertions } = this.props;
     return (
       <div>
         <Header />
@@ -21,7 +24,7 @@ class Feedback extends Component {
         <h3>
           Placar Final:
           {' '}
-          <span data-testid="feedback-total-score">{ player.score }</span>
+          <span data-testid="feedback-total-score">{ score }</span>
         </h3>
         <h3>
           Acertos:
@@ -33,4 +36,15 @@ class Feedback extends Component {
   }
 }
 
-export default connect()(Feedback);
+Feedback.propTypes = {
+  score: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
+
+};
+
+const mapStateToProps = (state) => ({
+  score: state.player.score,
+  assertions: state.player.assertions,
+});
+
+export default connect(mapStateToProps)(Feedback);

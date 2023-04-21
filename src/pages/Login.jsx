@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createUser } from '../redux/actions/userActions';
 import { fetchTrivia } from '../service/fetchTrivia';
-import { createPlayer } from '../redux/actions/playerActions';
 
 class Login extends Component {
   state = {
@@ -35,7 +34,6 @@ class Login extends Component {
     const { dispatch, history } = this.props;
     const token = await fetchTrivia();
     dispatch(createUser(name, email));
-    dispatch(createPlayer(name, email));
     localStorage.setItem('token', token);
     history.push('/game');
   };

@@ -1,12 +1,7 @@
 export const CREATE_PLAYER = 'CREATE_PLAYER';
 export const CREATE_PONTUATION = 'CREATE_PONTUATION';
 
-export const createPlayer = (name, gravatarEmail) => ({
+export const createPlayer = (name, assertions, score, gravatarEmail) => ({
   type: CREATE_PLAYER,
-  payload: { name, gravatarEmail },
-});
-
-export const createPontuation = (assertions, score) => ({
-  type: CREATE_PLAYER,
-  payload: { assertions, score },
+  payload: { name, assertions, score, gravatarEmail },
 });

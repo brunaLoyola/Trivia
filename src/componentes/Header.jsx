@@ -5,9 +5,7 @@ import PropTypes from 'prop-types';
 
 class Header extends Component {
   render() {
-    const { name, email } = this.props;
-    console.log(name);
-    console.log(email);
+    const { name, email, score } = this.props;
     const hash = md5(email).toString();
     const gravatarUrl = `https://www.gravatar.com/avatar/${hash}`;
 
@@ -19,7 +17,7 @@ class Header extends Component {
           data-testid="header-profile-picture"
         />
         <h1 data-testid="header-player-name">{name}</h1>
-        <p data-testid="header-score">0</p>
+        <p data-testid="header-score">{score}</p>
       </header>
     );
   }
@@ -27,12 +25,14 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
   ...state.userReducer,
+  score: state.player.score,
 });
 console.log(mapStateToProps);
 
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);
